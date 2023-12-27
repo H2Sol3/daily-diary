@@ -9,12 +9,18 @@
 		select count(*) from board
 		where user_seq = #{userSeq}
 	</select>
-
+<!-- 작성한 일기 목록 가져오기 -->
 	<select id="getBoardList" parameterType="hashmap" resultType="boarddto">
 		select * from board
 		where user_seq = #{userSeq}
+		ORDER BY board_seq DESC
 		limit #{limit},10
 	</select>
+<!-- 일기 작성하기-->
+	<insert id="insertBoard" parameterType="boarddto">
+		insert into board(user_seq, title, content, secret, file, date)
+		values (#{userSeq},#{title},#{content},#{secret},#{file},now())
+	</insert>
 
 <!--
 	&lt;!&ndash; 코멘트 등록 &ndash;&gt;

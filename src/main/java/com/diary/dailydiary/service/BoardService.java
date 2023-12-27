@@ -9,4 +9,6 @@ public interface BoardService {
     int getBoardCount(int userSeq);
 
     List<BoardDTO> getBoardList(HashMap<String,Integer> map);
+
+    void insertBoard(BoardDTO boardDTO);
 }

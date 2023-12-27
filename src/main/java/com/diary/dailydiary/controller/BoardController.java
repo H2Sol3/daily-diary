@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/diary")
+@RequestMapping("/daily-list")
 public class BoardController {
 
     @Autowired
@@ -49,5 +50,23 @@ public class BoardController {
 
         return mv;
     }
+
+    //다이어리 작성 폼
+    @GetMapping("/diary")
+    public String form(){
+        return "board/form";
+    }
+
+    //다이어리 작성
+    @PostMapping("/diary")
+    public String inserDiary(BoardDTO boardDTO){
+        //세션값으로 변경 필요
+        boardDTO.setUserSeq(1);
+        //일기 작성
+        boardService.insertBoard(boardDTO);
+        return "redirect:/daily-list/1";
+    }
+
+
 
 }
