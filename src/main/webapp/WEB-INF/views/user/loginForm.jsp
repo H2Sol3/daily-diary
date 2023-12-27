@@ -18,20 +18,21 @@
         <h2>로그인</h2>
         <form action="/login" method="post">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" placeholder="email" >
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeholder="비밀번호" >
             </div>
             <div class="form-group">
                 <button type="submit">로그인</button>
                 <button type="#">구글 로그인</button>
                 <h3>또는</h3>
-                <button onclick="location.href='/register'">회원가입</button>
             </div>
         </form>
+
+            <input type="hidden" name="userSeq" value = 1>
+            <button onclick="location.href='/register'">회원가입</button>
+            <button onclick="location.href='/diary/1'">일기장 임시버튼</button>
     </div>
 </body>
 </html>

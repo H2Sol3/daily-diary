@@ -24,11 +24,23 @@ public class UserController {
         return "user/loginForm";
     }
 
+    //로그인
+    @PostMapping()
+    public String login(UserDTO userDTO){
+
+        return "";
+    }
+
+    //로그아웃
+
+
     //회원가입 화면 리턴
     @GetMapping(path = "/register")
     public String register(){
         return "user/register";
     }
+
+
 
     @PostMapping(path = "/register")
     public String register(UserDTO dto){
@@ -45,5 +57,7 @@ public class UserController {
 
         return "user/loginForm";
     }
+
+
 
 }

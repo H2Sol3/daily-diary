@@ -17,16 +17,16 @@
         <h2>회원가입</h2>
         <form action="/register" method="post">
             <div class="form-group">
-                <input type="email" id="email" name="email" placeholder="email" required>
+                <input type="email" id="email" name="email" placeholder="email" >
             </div>
             <div class="form-group">
-                <input type="text" id="nickName" name="nickName" placeholder="닉네임" required>
+                <input type="text" id="nickName" name="nickName" placeholder="닉네임" >
             </div>
             <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                <input type="password" id="password" name="password" placeholder="비밀번호" >
             </div>
             <div class="form-group">
-                <button type="submit">회원가입</button>
+                <button type="submit">회원가입하기</button>
             </div>
         </form>
     </div>
