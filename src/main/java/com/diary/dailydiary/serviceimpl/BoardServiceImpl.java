@@ -28,5 +28,10 @@ public class BoardServiceImpl implements BoardService {
         return boardDAO.getBoardList(map);
     }
 
+    @Override
+    public void insertBoard(BoardDTO boardDTO) {
+        boardDAO.insertBoard(boardDTO);
+    }
+
 
 }

@@ -18,16 +18,13 @@
 
         <%-- 일기장 리스트 --%>
         <c:forEach items="${boardList}" var="list" varStatus="status">
-            <div>
+            <div><hr>
                 <h3>${list.title}</h3>
                 <h5>${list.content}</h5>
-                <h5>${list.date}</h5>
+                <h5>${list.date}</h5><hr>
             </div>
         </c:forEach>
-
-        <form action="#" method="post">
-            <%-- 글 작성목록 --%>
-        </form>
+        <input type = "button" value="글작성" onclick="location.href='/daily-list/diary'">
     </div>
 </body>
 </html>

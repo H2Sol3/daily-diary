@@ -32,7 +32,7 @@
 
             <input type="hidden" name="userSeq" value = 1>
             <button onclick="location.href='/register'">회원가입</button>
-            <button onclick="location.href='/diary/1'">일기장 임시버튼</button>
+            <button onclick="location.href='/daily-list/1'">일기장 임시버튼</button>
     </div>
 </body>
 </html>
