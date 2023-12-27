@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.diary.dailydiary.dao.BoardDAO">
+<!--
+	&lt;!&ndash; 코멘트 등록 &ndash;&gt;
+	&lt;!&ndash; <select id="insertComment" parameterType="commentdto"> insert into
+		comment </select> &ndash;&gt;
+
+&lt;!&ndash; 커뮤니티 &ndash;&gt;
+	<select id="getAllBoardCnt" resultType="int">
+		select count(*) from board
+		WHERE board_type = "talk"
+	</select>
+
+	<select id="getAllBoardList" resultType="boarddto" parameterType="int">
+		select * from board
+		WHERE board_type = "talk"
+		order by board_seq desc
+		limit #{limit},10
+	</select>
+	
+	<select id="getOneBoard" resultType="boarddto" parameterType="int">
+		select * from board where board_seq=#{boardSeq}
+	</select>
+	
+	<insert id="insertBoard" parameterType="boarddto">
+		insert into board(user_seq,category,title,content,DATE,board_type,secret)
+			values(#{userSeq},#{category},#{title},#{content},now(),#{boardType},#{secret})
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from board where board_seq=#{boardSeq}
+	</delete>
+	
+	<update id="updateViewCount" parameterType="int">
+		update board set view_count=view_count+1 where board_seq=#{boardSeq}
+	</update>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		update board set
+		category=#{dto.category},
+		title=#{dto.title},
+		content=#{dto.content},
+		board_type=#{dto.boardType},
+		secret=#{secret}
+		where board_seq=#{boardSeq}
+	</update>
+
+	<select id="getAllMissionList" resultType="boarddto">
+		select * from board where board_type='mission'
+		order by board_seq desc
+	</select>
+
+	<insert id="insertMission" parameterType="boarddto">
+		insert into board(user_seq,title,content,DATE,board_type,fileName, filePath)
+		values(#{userSeq},#{title},#{content},now(),'mission',#{fileName},#{filePath})
+	</insert>
+	
+	<delete id="deleteBoardByUserSeq" parameterType="int">
+		delete from board where user_seq=#{userSeq}
+	</delete>
+	
+	<select id="getBoardUserSeq" parameterType="int" resultType="int">
+		SELECT user_seq FROM board
+		WHERE board_seq=#{boardSeq}
+	</select>
+	
+	<select id="getSearchResult" parameterType="hashmap" resultType="boarddto">
+		select * from board
+		where title like concat('%',#{keyword},'%')
+		and secret = 0
+		order by board_seq desc
+		limit #{limit},10
+	</select>
+	
+	<select id="getSearchListCnt" parameterType="String" resultType="int">
+		select count(*) from board
+		where title like concat('%',#{keyword},'%')
+		and secret = 0
+	</select>
+	
+	<select id="getRecentCommunityList" resultType="boarddto">
+		SELECT * FROM board
+		where board_type = "talk"
+		ORDER BY board_seq desc
+		LIMIT 0,5
+	</select>
+	
+	<select id="getRecentMissionList" resultType="boarddto">
+		SELECT * FROM board
+		where board_type = "mission"
+		ORDER BY board_seq desc
+		LIMIT 0,5
+	</select>
+
+	<update id="updateMission" parameterType="hashmap">
+		update board set
+						 category=#{dto.category},
+						 title=#{dto.title},
+						 content=#{dto.content},
+						 board_type='mission',
+						 secret=#{secret},
+						 fileName=#{dto.fileName},
+						 filePath=#{dto.filePath}
+		where board_seq=#{boardSeq}
+	</update>-->
+
+</mapper>
