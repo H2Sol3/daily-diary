@@ -6,13 +6,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login Form</title>
+    <title>dailydiary 메인화면</title>
 
 </head>
 <body>
     <div >
         <h3>오늘 하루를 기록해보세요.</h3>
-        <h1> ㅇㅇ이의 일기장 </h1>
+        <h1> 한솔이의 일기장 </h1>
     </div>
     <div class="login-container">
         <h2>로그인</h2>
