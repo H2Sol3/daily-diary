@@ -19,6 +19,12 @@
                 <td th:text="${diaryDTO.content}"></td>
             </tr>
             <tr>
+                <!-- diaryDTO에 저장된 이미지 파일 경로 -->
+                <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
+
+            </tr>
+
+            <tr>
                 <td th:text="${diaryDTO.date}"></td>
             </tr>
         </table>
