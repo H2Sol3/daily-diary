@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("boardService")
+@Service("diaryService")
 public class DiaryServiceImpl implements DiaryService {
     @Autowired
     DiaryDAO diaryDAO;

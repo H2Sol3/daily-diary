@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>메인dailydiary 메인화면</title>
@@ -10,7 +10,7 @@
     <h1>한솔이의 일기장</h1>
 </div>
 <div class="register-container">
-    <form action="@{${#httpServletRequest.contextPath}/daily-list/diary}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/daily-list/diary}" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td><h2>일기 작성</h2></td>

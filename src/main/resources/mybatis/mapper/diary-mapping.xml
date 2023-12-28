@@ -18,8 +18,8 @@
 	</select>
 <!-- 일기 작성하기-->
 	<insert id="insertBoard" parameterType="diarydto">
-		insert into board(user_seq, title, content, secret, file, filepath, date)
-		values (#{userSeq},#{title},#{content},#{secret},#{file},#{filePath},now())
+		insert into board(user_seq, title, content, secret, file_name, file_path, date)
+		values (#{userSeq},#{title},#{content},#{secret},#{fileName},#{filePath},now())
 	</insert>
 <!--일기 상세보기-->
 	<select id="getDiary" parameterType="int" resultType="diarydto">
