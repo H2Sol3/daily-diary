@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메인dailydiary 메인화면</title>
+</head>
+<body>
+<div>
+    <h3>오늘 하루를 기록해보세요.</h3>
+    <h1>한솔이의 일기장</h1>
+</div>
+<div class="register-container">
+    <form action="#">
+        <table>
+            <tr>
+                <td th:text="${diaryDTO.title}"></td>
+            </tr>
+            <tr>
+                <td th:text="${diaryDTO.content}"></td>
+            </tr>
+            <tr>
+                <td th:text="${diaryDTO.date}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="수정">
+        <input type="button" id="btn-delete" th:onclick="'deleteDiary(' + ${diaryDTO.boardSeq} + ')'" value="삭제">
+<!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    function deleteDiary(boardSeq){
+    const check = confirm('삭제하시겠습니까?');
+    alert(boardSeq);
+
+    if(check){
+        $.ajax({
+            type: "DELETE",
+            url: "/daily-list/diary/"+boardSeq,
+            success: function(result){
+                alert("일기가 삭제 되었습니다.");
+                location.href="/daily-list/1";
+            },
+            error: function(xhr, status, error) {
+                console.error("에러 발생:", error);
+            }
+        });
+    }
+};
+
+</script>
+</body>
+</html>

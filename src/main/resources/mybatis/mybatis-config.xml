@@ -7,7 +7,7 @@
     </settings>
     <typeAliases>
         <typeAlias type="com.diary.dailydiary.dto.UserDTO" alias="userdto" />
-        <typeAlias type="com.diary.dailydiary.dto.BoardDTO" alias="boarddto" />
+        <typeAlias type="com.diary.dailydiary.dto.DiaryDTO" alias="diarydto" />
         <typeAlias type="com.diary.dailydiary.dto.CommentDTO" alias="commentdto" />
     </typeAliases>
 </configuration>

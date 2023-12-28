@@ -45,6 +45,8 @@ dependencies {
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'org.springframework.security:spring-security-taglibs:6.0.2'
 	implementation 'commons-fileupload:commons-fileupload:1.4'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 }
 
 tasks.named('bootBuildImage') {
