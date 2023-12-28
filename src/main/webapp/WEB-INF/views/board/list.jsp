@@ -15,16 +15,15 @@
     </div>
     <div class="register-container">
         <h2>일기장 목록</h2>
-
+        <input type = "button" value="글작성" onclick="location.href='/daily-list/diaryForm'">
         <%-- 일기장 리스트 --%>
         <c:forEach items="${boardList}" var="list" varStatus="status">
             <div><hr>
-                <h3>${list.title}</h3>
+                <h3><a href="/daily-list/diary/${list.boardSeq}">${list.title}</a></h3>
                 <h5>${list.content}</h5>
                 <h5>${list.date}</h5><hr>
             </div>
         </c:forEach>
-        <input type = "button" value="글작성" onclick="location.href='/daily-list/diary'">
     </div>
 </body>
 </html>

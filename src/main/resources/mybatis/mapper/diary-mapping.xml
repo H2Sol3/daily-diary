@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diary.dailydiary.dao.BoardDAO">
+<mapper namespace="com.diary.dailydiary.dao.DiaryDAO">
 
 <!-- 본인이 작성한 일기 갯수-->
 	<select id="getBoardCount" parameterType="int" resultType="int">
@@ -10,17 +10,26 @@
 		where user_seq = #{userSeq}
 	</select>
 <!-- 작성한 일기 목록 가져오기 -->
-	<select id="getBoardList" parameterType="hashmap" resultType="boarddto">
+	<select id="getBoardList" parameterType="hashmap" resultType="diarydto">
 		select * from board
 		where user_seq = #{userSeq}
 		ORDER BY board_seq DESC
 		limit #{limit},10
 	</select>
 <!-- 일기 작성하기-->
-	<insert id="insertBoard" parameterType="boarddto">
-		insert into board(user_seq, title, content, secret, file, date)
-		values (#{userSeq},#{title},#{content},#{secret},#{file},now())
+	<insert id="insertBoard" parameterType="diarydto">
+		insert into board(user_seq, title, content, secret, file, filepath, date)
+		values (#{userSeq},#{title},#{content},#{secret},#{file},#{filePath},now())
 	</insert>
+<!--일기 상세보기-->
+	<select id="getDiary" parameterType="int" resultType="diarydto">
+		select * from board
+		where board_seq=#{boardSeq}
+	</select>
+<!--일기 삭제하기-->
+	<delete id="deleteDiary" parameterType="int">
+		delete from board where board_seq=#{boardSeq}
+	</delete>
 
 <!--
 	&lt;!&ndash; 코멘트 등록 &ndash;&gt;
