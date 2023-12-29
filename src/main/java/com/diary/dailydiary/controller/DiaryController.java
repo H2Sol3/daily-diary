@@ -7,8 +7,13 @@ import com.diary.dailydiary.service.UserService;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,7 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class DiaryController {
 
     @Autowired
-    @Qualifier("boardService")
+    @Qualifier("diaryService")
     DiaryService diaryService;
 
     @Autowired
@@ -71,7 +76,7 @@ public class DiaryController {
 
     //다이어리 작성
     @PostMapping(path = "/diary")
-    public String insertDiary(@Valid DiaryDTO diaryDTO, BindingResult result, @RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes){
+    public String insertDiary(@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @Valid DiaryDTO diaryDTO, BindingResult result){
         //세션값으로 변경 필요
         diaryDTO.setUserSeq(1);
 
@@ -84,23 +89,26 @@ public class DiaryController {
 
         try {
             // 업로드된 파일을 저장할 디렉토리 생성
-            File uploadDir = new File("src/main/resources/static/uploads");
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+            if (file != null && !file.isEmpty()) {
+                // 업로드된 파일을 저장할 디렉토리 생성
+                File uploadDir = new File("src/main/resources/static/uploads");
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+
+                // 업로드된 파일을 실제 디렉토리에 저장
+                File uploadedFile = new File(uploadDir.getAbsolutePath(), file.getOriginalFilename());
+                file.transferTo(uploadedFile);
+
+                // 파일 업로드 성공 시 메시지 전달
+                diaryDTO.setFileName(uploadedFile.getName());
+                diaryDTO.setFilePath(uploadedFile.getPath());
             }
-
-            // 업로드된 파일을 실제 디렉토리에 저장
-            File uploadedFile = new File(uploadDir.getAbsolutePath(), file.getOriginalFilename());
-            file.transferTo(uploadedFile);
-
-            // 파일 업로드 성공 시 메시지 전달
-            diaryDTO.setFile(uploadedFile.getName());
-            diaryDTO.setFilePath(uploadedFile.getPath());
 
             //일기 작성
             diaryService.insertBoard(diaryDTO);
 
-            redirectAttributes.addFlashAttribute("message", "파일과 게시글이 성공적으로 업로드 되었습니다!");
+            //redirectAttributes.addFlashAttribute("message", "파일과 게시글이 성공적으로 업로드 되었습니다!");
 
             return "redirect:/daily-list/1";
 
