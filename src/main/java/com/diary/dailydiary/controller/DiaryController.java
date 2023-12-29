@@ -80,11 +80,18 @@ public class DiaryController {
         //세션값으로 변경 필요
         diaryDTO.setUserSeq(1);
 
+        //유효성 검사 수정 필요
         if (result.hasErrors()) {
             System.out.print(result);
-            // 유효성 검사 실패 시 처리
-            redirectAttributes.addFlashAttribute("message", "게시글 등록에 실패하였습니다.");
+//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.diaryDTO", result);
+//            redirectAttributes.addFlashAttribute("diaryDTO", diaryDTO);
             return "redirect:/daily-list/diaryForm";
+            // 유효성 검사 실패 시 처리
+//            result.reject("overMaxTotalPrice",
+//                    "글로벌 에러 발생 : 가격 * 수량이 5억이 넘을 수 없습니다. 입력값 : ");
+//        }
+//            redirectAttributes.addFlashAttribute("message", "게시글 등록에 실패하였습니다.");
+
         }
 
         try {
@@ -114,7 +121,7 @@ public class DiaryController {
 
         } catch (IOException e) {
             // 파일 업로드 실패 시 에러 메시지 전달
-            redirectAttributes.addFlashAttribute("message", "파일 업로드에 실패하였습니다.: " + e.getMessage());
+            //redirectAttributes.addFlashAttribute("message", "파일 업로드에 실패하였습니다.: " + e.getMessage());
             return "redirect:/daily-list/diaryForm";
         }
 

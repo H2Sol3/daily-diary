@@ -1,8 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>메인dailydiary 메인화면</title>
+    <style>
+        input {
+            width: 200px;
+        }
+        .error-class {
+            color: red;
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -16,7 +26,12 @@
                 <td><h2>일기 작성</h2></td>
             </tr>
             <tr>
-                <td><input type="text" placeholder="제목을 입력하세요." name="title"></td>
+                <td><input type="text" placeholder="제목을 입력하세요." name="title" id="title"></td>
+
+<!--                <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요!"-->
+<!--                       th:class="${#fields.hasErrors('title')} ? 'form-control fieldError' : 'form-control'">-->
+<!--                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Incorrect date</p>-->
+
                 <td><input type="button" value="취소"></td>
                 <td><button type="submit">작성</button></td>
             </tr>
@@ -30,5 +45,9 @@
         </table>
     </form>
 </div>
+<script>
+<!--  작성 버튼 클릭시 유효성 검사 필요  -->
+
+</script>
 </body>
 </html>
