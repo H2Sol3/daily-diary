@@ -29,6 +29,7 @@
             </tr>
         </table>
         <input type="submit" value="수정">
+        <input type="button" value="목록" th:onclick="goDiaryList()">
         <input type="button" id="btn-delete" th:onclick="'deleteDiary(' + ${diaryDTO.boardSeq} + ')'" value="삭제">
 <!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
     </form>
@@ -36,6 +37,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    function goDiaryList(){
+        location.href="/daily-list/1";
+    }
+
     function deleteDiary(boardSeq){
     const check = confirm('삭제하시겠습니까?');
 
