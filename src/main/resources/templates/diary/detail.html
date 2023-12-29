@@ -10,7 +10,6 @@
     <h1>한솔이의 일기장</h1>
 </div>
 <div class="register-container">
-    <form action="#">
         <table>
             <tr>
                 <td th:text="${diaryDTO.title}"></td>
@@ -25,18 +24,19 @@
             </tr>
 
             <tr>
-                <td th:text="${diaryDTO.date}"></td>
+                <td th:text="${diaryDTO.date}" id="date" name="date"></td>
             </tr>
         </table>
-        <input type="submit" value="수정">
-        <input type="button" value="목록" th:onclick="goDiaryList()">
+    <input type="button" value="수정" th:onclick="|location.href='@{/daily-list/diaryForm/{boardSeq}(boardSeq=${diaryDTO.boardSeq})}'|">
+
+    <input type="button" value="목록" th:onclick="goDiaryList()">
         <input type="button" id="btn-delete" th:onclick="'deleteDiary(' + ${diaryDTO.boardSeq} + ')'" value="삭제">
 <!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
-    </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
     function goDiaryList(){
         location.href="/daily-list/1";
     }

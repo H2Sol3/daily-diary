@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -138,6 +139,22 @@ public class DiaryController {
         mv.setViewName("diary/detail");
         return mv;
     }
+
+//   다이어리 수정
+    @GetMapping(path = "/diaryForm/{boardSeq}")
+    public ModelAndView updateForm(@PathVariable("boardSeq") int boardSeq){
+        ModelAndView mv = new ModelAndView();
+        DiaryDTO diaryDTO = diaryService.getDiary(boardSeq);
+        mv.addObject("diaryDTO", diaryDTO);
+        mv.setViewName("diary/updateForm");
+        return mv;
+    }
+
+//    @ResponseBody
+//    @PutMapping(path = "/diary/{boardSeq}")
+//    public String updateDiary(@PathVariable int boardSeq){
+//
+//    }
 
     //다이어리 삭제
     @ResponseBody
