@@ -43,5 +43,10 @@ public class DiaryServiceImpl implements DiaryService {
         diaryDAO.deleteDiary(boardSeq);
     }
 
+    @Override
+    public void updateDiary(DiaryDTO diaryDTO) {
+        diaryDAO.updateDiary(diaryDTO);
+    }
+
 
 }
