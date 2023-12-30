@@ -16,6 +16,7 @@
     <div th:each="list, status : ${boardList}">
         <hr>
         <a th:href="@{/daily-list/diary/{boardSeq}(boardSeq=${list.boardSeq})}">
+        <img th:if="${list.fileName ne null}" th:src="@{'/uploads/' + ${list.fileName}}" width="300" alt="게시글 이미지">
             <h3 th:text="${list.title}"></h3>
         </a>
 

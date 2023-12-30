@@ -2,6 +2,10 @@
 <!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <meta charset="UTF-8">
     <title>메인dailydiary 메인화면</title>
     <style>
@@ -42,6 +46,29 @@
                 <td><label for="file">첨부파일</label>
                     <input type="file" class="form-control-file" id="file" name="file"></td>
             </tr>
+
+<!--            <input type="text" name="birthday" id="birthdayPicker" value="2023-01-01" />-->
+
+<!--            <script>-->
+<!--                $(function() {-->
+<!--                    // 초기 날짜를 가져와서 Date 객체로 변환-->
+<!--                    var initialDate = $('#birthdayPicker').val();-->
+<!--                    var parsedDate = moment(initialDate, 'YYYY-MM-DD');-->
+
+<!--                    $('input[name="birthday"]').daterangepicker({-->
+<!--                        singleDatePicker: true,-->
+<!--                        showDropdowns: true,-->
+<!--                        minYear: 1901,-->
+<!--                        maxYear: parseInt(moment().format('YYYY'), 10),-->
+<!--                        startDate: parsedDate,  // 초기 날짜 설정-->
+<!--                    }, function(start, end, label) {-->
+<!--                        var years = moment().diff(start, 'years');-->
+<!--                        alert("You are " + years + " years old!");-->
+<!--                    });-->
+<!--                });-->
+<!--            </script>-->
+
+
         </table>
     </form>
 </div>

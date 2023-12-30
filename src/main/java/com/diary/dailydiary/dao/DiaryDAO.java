@@ -18,4 +18,6 @@ public interface DiaryDAO {
     DiaryDTO getDiary(int boardSeq);
 
     void deleteDiary(int boardSeq);
+
+    void updateDiary(DiaryDTO diaryDTO);
 }

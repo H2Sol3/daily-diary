@@ -18,5 +18,18 @@ public class DiaryDTO {
     @NotEmpty(message = "내용을 입력하세요.")
     private String content;
 
-
+    @Override
+    public String toString() {
+        return "DiaryDTO{" +
+                "boardSeq=" + boardSeq +
+                ", userSeq=" + userSeq +
+                ", secret=" + secret +
+                ", viewCount=" + viewCount +
+                ", fileName='" + fileName + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", date='" + date + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

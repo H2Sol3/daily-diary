@@ -30,6 +30,16 @@
 	<delete id="deleteDiary" parameterType="int">
 		delete from board where board_seq=#{boardSeq}
 	</delete>
+<!-- 일기 수정하기-->
+	<update id="updateDiary" parameterType="diarydto">
+		update board set
+		title=#{title},
+		content=#{content},
+		file_name=#{fileName},
+		file_path=#{filePath},
+		date=now()
+		where board_seq=#{boardSeq}
+	</update>
 
 <!--
 	&lt;!&ndash; 코멘트 등록 &ndash;&gt;
