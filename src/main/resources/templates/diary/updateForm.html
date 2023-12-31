@@ -10,7 +10,7 @@
     <h1>한솔이의 일기장 수정하기</h1>
 </div>
 <div class="register-container">
-    <form id="form">
+    <form id="form" name="form">
         <table>
             <tr>
                 <td><input type="text" th:value="${diaryDTO.title}" name="title"/></td>
@@ -24,16 +24,21 @@
             </tr>
             <tr>
                 <td><label>기존 이미지</label>
-                <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지"></td>
+                    <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
+                    <input type="button" value="삭제" th:onclick="clearImg()">
+                </td>
             </tr>
 
 <!--            <tr>-->
 <!--                <td><input type="text" value="${diaryDTO.date}"></td>-->
 <!--            </tr>-->
         </table>
-        <input type="submit" value="수정" th:onclick="'updateDiary(' + ${diaryDTO.boardSeq} + ')'">
+        <input type="submit" value="수정" th:onclick="'updateDiary(' + ${diaryDTO.boardSeq} + '); return false;'">
         <input type="button" value="목록" th:onclick="goDiaryList()">
 <!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
+<!--        var form = $('#form')[0];-->
+<!--        var formData = new FormData(form);-->
+
     </form>
 </div>
 
@@ -46,6 +51,7 @@
         var file = fileInput.files[0]; // 선택된 파일 가져오기
 
         var formData = new FormData();
+
         formData.append('boardSeq', boardSeq);
         formData.append('title', title);
         formData.append('content', content);
@@ -57,9 +63,14 @@
             data: formData,
             processData: false, // FormData 객체 그대로 전송하기 위해 필요
             contentType: false, // FormData 객체 그대로 전송하기 위해 필요
-            success: function(result){
-                alert("수정성공");
-                location.href="/daily-list/diary/"+boardSeq;
+            success: function(success){
+                console.log(success);
+                if (success === "success") {
+                    alert("수정성공");
+                    location.href="/daily-list/diary/"+boardSeq;
+                } else {
+                    alert("수정 실패");
+                }
             },
             error: function(xhr, status, error) {
                 console.error("에러 발생:", error);

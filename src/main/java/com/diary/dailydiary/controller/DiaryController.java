@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,21 +158,25 @@ public class DiaryController {
     public String updateDiary(@RequestParam(value = "file", required = false) MultipartFile file, DiaryDTO diaryDTO)
             throws IOException {
 
-        DiaryDTO originDTO = diaryService.getDiary(diaryDTO.getBoardSeq());
+        System.out.println(diaryDTO.getTitle());
+        System.out.println(diaryDTO.getContent());
         System.out.println(diaryDTO.getFileName());
+
+        DiaryDTO originDTO = diaryService.getDiary(diaryDTO.getBoardSeq());
+
         if (file == null) {
             //새 파일이 없을 때
             diaryDTO.setFileName(originDTO.getFileName());
             diaryDTO.setFilePath(originDTO.getFilePath());
         } else {
             //새 파일이 있을 때
-            if (originDTO.getFilePath() != null) {
-                File newFile = new File(originDTO.getFilePath());
-
-                if (newFile.exists()) { // 파일이 존재하면
-                    newFile.delete(); // 파일 삭제
-                }
-            }
+//            if (originDTO.getFilePath() != null) {
+//                File newFile = new File(originDTO.getFilePath());
+//
+//                if (newFile.exists()) { // 파일이 존재하면
+//                    newFile.delete(); // 파일 삭제
+//                }
+//            }
             File uploadDir = new File("src/main/resources/static/uploads");
             File saveFile = new File(uploadDir.getAbsolutePath(), file.getOriginalFilename());
             file.transferTo(saveFile);
@@ -179,10 +184,25 @@ public class DiaryController {
             diaryDTO.setFilePath(saveFile.getPath());
         }
 
-            System.out.println(diaryDTO.getFileName());
+//            System.out.println(diaryDTO.getFileName());
             diaryService.updateDiary(diaryDTO);
-            return "success";
+        // JSON 응답을 위한 Map 생성
+//        Map<String, String> response = new HashMap<>();
+//        response.put("status", "success");
+//
+//        // 리다이렉트할 URL을 설정 (원하는 URL로 수정)
+//        response.put("redirectUrl", "/daily-list/diaryForm/" + diaryDTO.getBoardSeq());
 
+        return "success";
+
+            // JSON 응답을 위한 Map 생성
+//            Map<String, String> response = new HashMap<>();
+//            response.put("status", "success");
+//
+//            // 리다이렉트할 URL을 설정 (원하는 URL로 수정)
+//            response.put("redirectUrl", "/daily-list/1");
+
+//            return response;
         }
 
         //다이어리 삭제
@@ -190,7 +210,7 @@ public class DiaryController {
         @DeleteMapping(path = "/diary/{boardSeq}")
         public String deleteDiary ( @PathVariable("boardSeq") int boardSeq){
             diaryService.deleteDiary(boardSeq);
-            return "succese";
+            return "success";
         }
 
 }
