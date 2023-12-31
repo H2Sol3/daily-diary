@@ -24,7 +24,9 @@
             </tr>
             <tr>
                 <td><label>기존 이미지</label>
-                <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지"></td>
+                    <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
+                    <input type="button" value="삭제" th:onclick="clearImg()">
+                </td>
             </tr>
 
 <!--            <tr>-->

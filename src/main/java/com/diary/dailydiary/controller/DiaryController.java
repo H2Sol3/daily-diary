@@ -170,13 +170,13 @@ public class DiaryController {
             diaryDTO.setFilePath(originDTO.getFilePath());
         } else {
             //새 파일이 있을 때
-            if (originDTO.getFilePath() != null) {
-                File newFile = new File(originDTO.getFilePath());
-
-                if (newFile.exists()) { // 파일이 존재하면
-                    newFile.delete(); // 파일 삭제
-                }
-            }
+//            if (originDTO.getFilePath() != null) {
+//                File newFile = new File(originDTO.getFilePath());
+//
+//                if (newFile.exists()) { // 파일이 존재하면
+//                    newFile.delete(); // 파일 삭제
+//                }
+//            }
             File uploadDir = new File("src/main/resources/static/uploads");
             File saveFile = new File(uploadDir.getAbsolutePath(), file.getOriginalFilename());
             file.transferTo(saveFile);
