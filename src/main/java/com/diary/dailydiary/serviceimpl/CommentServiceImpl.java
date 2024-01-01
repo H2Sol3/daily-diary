@@ -22,4 +22,9 @@ public class CommentServiceImpl implements CommentService {
     public void insertComment(CommentDTO commentDTO) {
         commentDAO.insertComment(commentDTO);
     }
+
+    @Override
+    public void deleteComment(int boardSeq) {
+        commentDAO.deleteComment(boardSeq);
+    }
 }
