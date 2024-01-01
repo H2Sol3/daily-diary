@@ -28,7 +28,7 @@
                     <label>기존 이미지</label>
                     <img th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
                     <input type="button" value="삭제" th:onclick="clearImg()">
-                    <input type="hidden" value="true" name="deleteImgCheck">
+                    <input type="hidden" value="false" name="deleteImgCheck">
                 </td>
             </tr>
 
@@ -53,10 +53,7 @@
 
         if(deleteImageClicked){
             $("#imgTr").hide();
-            var deleteImgCheck = $('input[name="deleteImgCheck"]').val();
             deleteImgCheck.val("true");
-        }else{
-            deleteImgCheck.val("false");
         }
     }
 
@@ -87,6 +84,9 @@
         if(content == null || content.trim() == ""){
             alert("내용을 입력하세요.");
             return false;
+        }
+        if (deleteImgCheck === undefined || deleteImgCheck === null) {
+            deleteImgCheck = false; // 값이 없을 때 기본적으로 false로 설정
         }
 
         var formData = new FormData();
