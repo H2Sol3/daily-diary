@@ -217,6 +217,7 @@ public class DiaryController {
         @ResponseBody
         @DeleteMapping(path = "/diary/{boardSeq}")
         public String deleteDiary ( @PathVariable("boardSeq") int boardSeq){
+            commentService.deleteComment(boardSeq);
             diaryService.deleteDiary(boardSeq);
             return "success";
         }
