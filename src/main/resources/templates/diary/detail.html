@@ -32,19 +32,79 @@
     <input type="button" value="목록" th:onclick="goDiaryList()">
         <input type="button" id="btn-delete" th:onclick="'deleteDiary(' + ${diaryDTO.boardSeq} + ')'" value="삭제">
 <!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
+
+    <div id="commentDiv">
+        <table>
+            <form th:action="@{/daily-list/diary}" id="commentForm" method="post">
+                <input type="text" placeholder="댓글 쓰기!" id="content" name="content">
+                <input type="hidden" id="userSeq" name="userSeq" value=1>
+    <!--            비밀댓글 수정 필요. 일단 0으로 고정-->
+                <input type="hidden" id="secret" name="secret" value=0>
+                <input type="submit" value="등록" th:onclick="'insertComment(' + ${diaryDTO.boardSeq} + '); return false;'">
+            </form>
+
+<!--           댓글 리스트 출력 -->
+            <tr th:if="${commentDTO != null}">
+                <td th:text="${commentDTO.content}"></td>
+                <td th:text="${commentDTO.date}"></td>
+            </tr>
+            <tr th:unless="${commentDTO != null}">
+                <td colspan="2">
+                    <h3>등록된 댓글이 없습니다.</h3>
+                </td>
+            </tr>
+
+
+        </table>
+<!--        }-->
+    </div>
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    function insertComment(boardSeq){
+        var content = $('input[name="content"]').val();
+        var userSeq = $('input[name="userSeq"]').val();
+        var secret = $('input[name="secret"]').val();
+
+        var formData = new FormData();
+
+        formData.append('boardSeq', boardSeq);
+        formData.append('userSeq', userSeq);
+        formData.append('content', content);
+        formData.append('secret', secret);
+
+        $.ajax({
+            type: "POST",
+            url: "/daily-list/comment/commentDiary",
+            data: formData,
+            processData: false, // FormData 객체 그대로 전송하기 위해 필요
+            contentType: false, // FormData 객체 그대로 전송하기 위해 필요
+            success: function(success){
+                console.log(success);
+                if (success === "success") {
+                    alert("댓글 등록 완료");
+                    location.href="/daily-list/diary/"+boardSeq;
+                } else {
+                    alert("수정 실패");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("에러 발생:", error);
+            }
+        });
+
+    };
 
     function goDiaryList(){
         location.href="/daily-list/1";
-    }
+        }
 
     function deleteDiary(boardSeq){
-    const check = confirm('삭제하시겠습니까?');
+        const check = confirm('삭제하시겠습니까?');
 
-    if(check){
+        if(check){
         $.ajax({
             type: "DELETE",
             url: "/daily-list/diary/"+boardSeq,
@@ -56,8 +116,8 @@
                 console.error("에러 발생:", error);
             }
         });
-    }
-};
+        }
+        };
 
 </script>
 </body>
