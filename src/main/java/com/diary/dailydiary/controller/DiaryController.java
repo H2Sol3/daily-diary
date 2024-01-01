@@ -163,36 +163,38 @@ public class DiaryController {
     //다이어리 수정
     @ResponseBody
     @PutMapping(path = "/diary")
-    public String updateDiary(@RequestParam(value = "file", required = false) MultipartFile file, DiaryDTO diaryDTO)
+    public String updateDiary(@RequestParam(value = "file", required = false) MultipartFile file, DiaryDTO diaryDTO, Boolean deleteImgCheck)
             throws IOException {
 
-        System.out.println(diaryDTO.getTitle());
-        System.out.println(diaryDTO.getContent());
-        System.out.println(diaryDTO.getFileName());
+        System.out.println(deleteImgCheck);
 
         DiaryDTO originDTO = diaryService.getDiary(diaryDTO.getBoardSeq());
 
-        if (file == null) {
-            //새 파일이 없을 때
-            diaryDTO.setFileName(originDTO.getFileName());
-            diaryDTO.setFilePath(originDTO.getFilePath());
-        } else {
-            //새 파일이 있을 때
-//            if (originDTO.getFilePath() != null) {
-//                File newFile = new File(originDTO.getFilePath());
-//
-//                if (newFile.exists()) { // 파일이 존재하면
-//                    newFile.delete(); // 파일 삭제
-//                }
-//            }
-            File uploadDir = new File("src/main/resources/static/uploads");
-            File saveFile = new File(uploadDir.getAbsolutePath(), file.getOriginalFilename());
-            file.transferTo(saveFile);
-            diaryDTO.setFileName(saveFile.getName());
-            diaryDTO.setFilePath(saveFile.getPath());
+        if(deleteImgCheck == true){
+            diaryDTO.setFileName(null);
+            diaryDTO.setFilePath(null);
+        }else {
+            if (file == null) {
+                //새 파일이 없을 때
+                diaryDTO.setFileName(originDTO.getFileName());
+                diaryDTO.setFilePath(originDTO.getFilePath());
+            } else {
+                //새 파일이 있을 때
+                //            if (originDTO.getFilePath() != null) {
+                //                File newFile = new File(originDTO.getFilePath());
+                //
+                //                if (newFile.exists()) { // 파일이 존재하면
+                //                    newFile.delete(); // 파일 삭제
+                //                }
+                //            }
+                File uploadDir = new File("src/main/resources/static/uploads");
+                File saveFile = new File(uploadDir.getAbsolutePath(), file.getOriginalFilename());
+                file.transferTo(saveFile);
+                diaryDTO.setFileName(saveFile.getName());
+                diaryDTO.setFilePath(saveFile.getPath());
+            }
         }
 
-//            System.out.println(diaryDTO.getFileName());
             diaryService.updateDiary(diaryDTO);
         // JSON 응답을 위한 Map 생성
 //        Map<String, String> response = new HashMap<>();
@@ -202,15 +204,6 @@ public class DiaryController {
 //        response.put("redirectUrl", "/daily-list/diaryForm/" + diaryDTO.getBoardSeq());
 
         return "success";
-
-            // JSON 응답을 위한 Map 생성
-//            Map<String, String> response = new HashMap<>();
-//            response.put("status", "success");
-//
-//            // 리다이렉트할 URL을 설정 (원하는 URL로 수정)
-//            response.put("redirectUrl", "/daily-list/1");
-
-//            return response;
         }
 
         //다이어리 삭제

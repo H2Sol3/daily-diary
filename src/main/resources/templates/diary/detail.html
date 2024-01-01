@@ -65,6 +65,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    //댓글 삭제
     function deleteComment(boardSeq){
         const check = confirm('메모를 삭제하시겠습니까?');
 
@@ -118,10 +119,12 @@
 
     };
 
+//  목록 이동
     function goDiaryList(){
         location.href="/daily-list/1";
         }
 
+//게시글 삭제
     function deleteDiary(boardSeq){
         const check = confirm('삭제하시겠습니까?');
 

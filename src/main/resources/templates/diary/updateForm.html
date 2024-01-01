@@ -22,10 +22,13 @@
                 <td><label for="file">첨부파일</label>
                     <input type="file" class="form-control-file" id="file" name="file"></td>
             </tr>
-            <tr>
-                <td><label>기존 이미지</label>
-                    <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
+
+            <tr th:if="${diaryDTO.fileName ne null}" id="imgTr">
+                <td>
+                    <label>기존 이미지</label>
+                    <img th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
                     <input type="button" value="삭제" th:onclick="clearImg()">
+                    <input type="hidden" value="true" name="deleteImgCheck">
                 </td>
             </tr>
 
@@ -44,11 +47,47 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    function clearImg(){
+        var deleteImageClicked = confirm('기존 이미지를 삭제하시겠습니까?');
+        var deleteImgCheck = $('input[name="deleteImgCheck"]');
+
+        if(deleteImageClicked){
+            $("#imgTr").hide();
+            var deleteImgCheck = $('input[name="deleteImgCheck"]').val();
+            deleteImgCheck.val("true");
+        }else{
+            deleteImgCheck.val("false");
+        }
+    }
+
+/*
+        // 기존 이미지 삭제 시에는 file 입력 요소를 초기화
+        if (deleteImageClicked) {
+            var fileInput = $('input[name="file"]')[0];
+            fileInput.value = null;
+        }
+        $("#imgTr").hide();
+
+
+    }*/
+
     function updateDiary(boardSeq){
+
         var title = $('input[name="title"]').val();
         var content = $('input[name="content"]').val();
+        var deleteImgCheck = $('input[name="deleteImgCheck"]').val();
         var fileInput = $('input[name="file"]')[0]; // 파일 입력 요소 가져오기
         var file = fileInput.files[0]; // 선택된 파일 가져오기
+
+
+        if(title == null || title.trim() == ""){
+            alert("제목을 입력하세요.");
+            return false;
+        }
+        if(content == null || content.trim() == ""){
+            alert("내용을 입력하세요.");
+            return false;
+        }
 
         var formData = new FormData();
 
@@ -56,6 +95,7 @@
         formData.append('title', title);
         formData.append('content', content);
         formData.append('file', file);
+        formData.append('deleteImgCheck', deleteImgCheck);
 
         $.ajax({
             type: "PUT",
@@ -79,6 +119,7 @@
     }
 
 
+
     function goDiaryList(){
         location.href="/daily-list/1";
     }
@@ -99,6 +140,8 @@
             }
         });
     }
+
+
 };
 
 </script>

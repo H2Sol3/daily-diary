@@ -32,6 +32,7 @@ public class CommentController {
     @Qualifier("commentService")
     CommentService commentService;
 
+//    댓글 등록
     @ResponseBody
     @PostMapping(path = "/commentDiary")
     public String commentDiary(CommentDTO commentDTO){
@@ -43,6 +44,7 @@ public class CommentController {
         return "success";
     }
 
+//    댓글삭제
     @ResponseBody
     @DeleteMapping(path = "/{boardSeq}")
     public String deleteComment(@PathVariable("boardSeq") int boardSeq){
