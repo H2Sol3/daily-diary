@@ -1,5 +1,6 @@
 package com.diary.dailydiary.controller;
 
+import com.diary.dailydiary.dto.CommentDTO;
 import com.diary.dailydiary.dto.DiaryDTO;
 import com.diary.dailydiary.service.DiaryService;
 import com.diary.dailydiary.service.CommentService;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,8 +138,14 @@ public class DiaryController {
     @GetMapping(path = "/diary/{boardSeq}")
     public ModelAndView detailDiary(@PathVariable("boardSeq") int boardSeq) {
         ModelAndView mv = new ModelAndView();
+        //일기 내용 가져오기
         DiaryDTO diaryDTO = diaryService.getDiary(boardSeq);
+        //일기에 달린 댓글리스트 가져오기
+        CommentDTO commentDTO = commentService.getCommentList(boardSeq);
+
         mv.addObject("diaryDTO", diaryDTO);
+        mv.addObject("commentDTO", commentDTO);
+
         mv.setViewName("diary/detail");
         return mv;
     }
