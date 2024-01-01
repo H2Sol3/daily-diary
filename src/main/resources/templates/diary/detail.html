@@ -48,7 +48,7 @@
                 <td th:text="${commentDTO.content}"></td>
                 <td th:text="${commentDTO.date}"></td>
                 <td><input type="button" value="수정" th:onclick="'updateComment(' + ${diaryDTO.boardSeq} + '); return false;'"></td>
-                <td><input type="button" value="삭제" th:onclick="'deleteComment(' + ${diaryDTO.boardSeq} + ')"></td>
+                <td><input type="button" value="삭제" th:onclick="'deleteComment(' + ${diaryDTO.boardSeq} + ')'"></td>
             </tr>
             <tr th:unless="${commentDTO != null}">
                 <td colspan="2">

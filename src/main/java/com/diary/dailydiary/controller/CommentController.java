@@ -44,7 +44,7 @@ public class CommentController {
     }
 
     @ResponseBody
-    @DeleteMapping(path = "/${boardSeq}")
+    @DeleteMapping(path = "/{boardSeq}")
     public String deleteComment(@PathVariable("boardSeq") int boardSeq){
         commentService.deleteComment(boardSeq);
         return "success";
