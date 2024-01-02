@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +32,7 @@ public class CommentController {
     @Qualifier("commentService")
     CommentService commentService;
 
+//    댓글 등록
     @ResponseBody
     @PostMapping(path = "/commentDiary")
     public String commentDiary(CommentDTO commentDTO){
@@ -38,6 +41,14 @@ public class CommentController {
 
 //        map.put("status", "success");//댓글 내용 보내기
 //
+        return "success";
+    }
+
+//    댓글삭제
+    @ResponseBody
+    @DeleteMapping(path = "/{boardSeq}")
+    public String deleteComment(@PathVariable("boardSeq") int boardSeq){
+        commentService.deleteComment(boardSeq);
         return "success";
     }
 
