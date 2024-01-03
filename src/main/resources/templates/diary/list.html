@@ -57,10 +57,13 @@
                 searchResults.empty(); // 기존 내용 초기화
 
                 var searchList = result.searchList;
+
+                $("#searchResults").append('<h4>검색한 일기 수 : ' + searchList.length + '</h4>');
+
                 if (searchList.length > 0) {
                     for (var i = 0; i < searchList.length; i++) {
                         var diary = searchList[i];
-                        console.log(diary.title);
+
                         // 동적으로 HTML 생성
                         var html = '<div>';
                         html += '<hr>';
