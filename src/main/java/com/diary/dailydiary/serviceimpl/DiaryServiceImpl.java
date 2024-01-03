@@ -4,6 +4,7 @@ import com.diary.dailydiary.dao.DiaryDAO;
 import com.diary.dailydiary.dao.CommentDAO;
 import com.diary.dailydiary.dto.DiaryDTO;
 import com.diary.dailydiary.service.DiaryService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,11 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public void updateDiary(DiaryDTO diaryDTO) {
         diaryDAO.updateDiary(diaryDTO);
+    }
+
+    @Override
+    public ArrayList<DiaryDTO> getDiaryListByText(String text) {
+        return diaryDAO.getDiaryListByText(text);
     }
 
 

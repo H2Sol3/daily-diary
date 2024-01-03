@@ -163,17 +163,18 @@ public class DiaryController {
     //다이어리 수정
     @ResponseBody
     @PutMapping(path = "/diary")
-    public String updateDiary(@RequestParam(value = "file", required = false) MultipartFile file, DiaryDTO diaryDTO, Boolean deleteImgCheck)
+    public String updateDiary(@RequestParam(value = "file", required = false) MultipartFile file, DiaryDTO diaryDTO,
+                              Boolean deleteImgCheck)
             throws IOException {
 
         System.out.println(deleteImgCheck);
 
         DiaryDTO originDTO = diaryService.getDiary(diaryDTO.getBoardSeq());
 
-        if(deleteImgCheck == true){
+        if (deleteImgCheck == true) {
             diaryDTO.setFileName(null);
             diaryDTO.setFilePath(null);
-        }else {
+        } else {
             if (file == null) {
                 //새 파일이 없을 때
                 diaryDTO.setFileName(originDTO.getFileName());
@@ -195,7 +196,7 @@ public class DiaryController {
             }
         }
 
-            diaryService.updateDiary(diaryDTO);
+        diaryService.updateDiary(diaryDTO);
         // JSON 응답을 위한 Map 생성
 //        Map<String, String> response = new HashMap<>();
 //        response.put("status", "success");
@@ -204,16 +205,28 @@ public class DiaryController {
 //        response.put("redirectUrl", "/daily-list/diaryForm/" + diaryDTO.getBoardSeq());
 
         return "success";
-        }
+    }
 
-        //다이어리 삭제
-        @ResponseBody
-        @DeleteMapping(path = "/diary/{boardSeq}")
-        public String deleteDiary ( @PathVariable("boardSeq") int boardSeq){
-            commentService.deleteComment(boardSeq);
-            diaryService.deleteDiary(boardSeq);
-            return "success";
-        }
+    //다이어리 삭제
+    @ResponseBody
+    @DeleteMapping(path = "/diary/{boardSeq}")
+    public String deleteDiary(@PathVariable("boardSeq") int boardSeq) {
+        commentService.deleteComment(boardSeq);
+        diaryService.deleteDiary(boardSeq);
+        return "success";
+    }
+
+    //다이어리 검색
+    @ResponseBody
+    @GetMapping(path = "/search")
+    public HashMap<String, Object> searchText(String searchText){
+        HashMap<String, Object> map = new HashMap<>();
+        ArrayList<DiaryDTO> list = diaryService.getDiaryListByText(searchText);
+        map.put("searchList",list);
+        return map;
+    }
+
+
 
 }
 
