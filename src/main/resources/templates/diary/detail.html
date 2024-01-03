@@ -10,41 +10,47 @@
     <h1>한솔이의 일기장</h1>
 </div>
 <div class="register-container">
-        <table>
-            <tr>
-                <td th:text="${diaryDTO.title}"></td>
-            </tr>
-            <tr>
-                <td th:text="${diaryDTO.content}"></td>
-            </tr>
-            <tr>
-                <!-- diaryDTO에 저장된 이미지 파일 경로 -->
-                <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300" alt="게시글 이미지">
+    <table>
+        <tr>
+            <td th:text="${diaryDTO.title}"></td>
+        </tr>
+        <tr>
+            <td th:text="${diaryDTO.content}"></td>
+        </tr>
+        <tr>
+            <!-- diaryDTO에 저장된 이미지 파일 경로 -->
+            <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300"
+                 alt="게시글 이미지">
 
-            </tr>
+        </tr>
 
-            <tr>
-                <td th:text="${diaryDTO.date}" id="date" name="date"></td>
-            </tr>
-        </table>
-    <input type="button" value="수정" th:onclick="|location.href='@{/daily-list/diaryForm/{boardSeq}(boardSeq=${diaryDTO.boardSeq})}'|">
+        <tr>
+            <td th:text="${diaryDTO.date}" id="date" name="date"></td>
+        </tr>
+    </table>
+    <input type="button" value="수정"
+           th:onclick="|location.href='@{/daily-list/diaryForm/{boardSeq}(boardSeq=${diaryDTO.boardSeq})}'|">
 
     <input type="button" value="목록" th:onclick="goDiaryList()">
-        <input type="button" id="btn-delete" th:onclick="'deleteDiary(' + ${diaryDTO.boardSeq} + ')'" value="삭제">
-<!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
+    <input type="button" id="btn-delete" th:onclick="'deleteDiary(' + ${diaryDTO.boardSeq} + ')'" value="삭제">
+    <!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
 
+
+    <!--  댓글  -->
     <div id="commentDiv">
         <table>
             <form th:action="@{/daily-list/diary}" id="commentForm" method="post" th:if="${commentDTO == null}">
                 <input type="text" placeholder="메모 쓰기!" id="content" name="content">
                 <input type="hidden" id="userSeq" name="userSeq" value=1>
-    <!--            비밀댓글 수정 필요. 일단 0으로 고정-->
+                <!--            비밀댓글 수정 필요. 일단 0으로 고정-->
                 <input type="hidden" id="secret" name="secret" value=0>
-                <input type="submit" value="등록" th:onclick="'insertComment(' + ${diaryDTO.boardSeq} + '); return false;'">
+                <input type="submit" value="등록"
+                       th:onclick="'insertComment(' + ${diaryDTO.boardSeq} + '); return false;'">
             </form>
-
-<!--           댓글 리스트 출력 -->
-            <tr th:if="${commentDTO != null}" style="display: show;"  id="updateCommFormTr">
+            <!--           댓글 출력 -->
+            <input type="hidden" name="userSeq" value=1>
+            <input type="hidden" name="secret" value=0>
+            <tr th:if="${commentDTO != null}" style="display: show;" id="updateCommFormTr">
                 <td>
                     <div>
                         <span th:text="${commentDTO.content}" id="commentContent1"></span>
@@ -55,16 +61,19 @@
                 </td>
                 <td>
                     <div>
-                        <input type="button" value="수정" th:onclick="'updateCommentForm(' + ${diaryDTO.boardSeq} + ')'" id="updateFormBtn">
+                        <input type="button" value="수정" th:onclick="'updateCommentForm(' + ${diaryDTO.boardSeq} + ')'"
+                               id="updateFormBtn">
                         <input type="button" value="삭제" th:onclick="'deleteComment(' + ${diaryDTO.boardSeq} + ')'">
                     </div>
                 </td>
             </tr>
-            <tr>
+            <!--            댓글 수정 폼 -->
+            <tr th:if="${commentDTO != null}">
                 <td>
                     <div id="updateCommDiv" style="display: none;">
-                        <input type="text" value="${commentDTO.content}" id="commentContent2">
-                        <input type="button" value="수정2" th:onclick="'updateComment(' + ${diaryDTO.boardSeq} + ')'" id="updateCommBtn">
+                        <input type="text" th:value="${commentDTO.content}" id="commentContent2">
+                        <input type="button" value="수정" th:onclick="'updateComment(' + ${diaryDTO.boardSeq} + ')'"
+                               id="updateCommBtn">
                         <input type="button" value="취소" th:onclick="'cancelComment()'" id="cancelUpdateBtn">
                     </div>
                 </td>
@@ -79,19 +88,44 @@
 
 
         </table>
-<!--        }-->
+        <!--        }-->
     </div>
 
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    //댓글 수정
+    //댓글 수정 폼
     function updateCommentForm(boardSeq){
         $("#updateCommFormTr").hide();
         $("#updateCommDiv").show();
     }
+//댓글 수정
+    function updateComment(boardSeq){
+        var content = $("#commentContent2").val();
+        var secret = $('input[name="secret"]').val();
+        var userSeq = $('input[name="userSeq"]').val();
 
+        $.ajax({
+            type: "PUT",
+            url: "/daily-list/comment/"+boardSeq,
+            data: {
+                "content" : content,
+                "boardSeq" : boardSeq,
+                "userSeq" : userSeq,
+                "secret" : secret
+                },
+            success: function(result){
+                alert("메모가 수정 되었습니다.");
+                location.href="/daily-list/diary/"+boardSeq;
+            },
+            error: function(request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    }
+
+//댓글 수정 취소
     function cancelComment(){
         $("#updateCommFormTr").show();
         $("#updateCommDiv").hide();
@@ -106,7 +140,7 @@
                 type: "DELETE",
                 url: "/daily-list/comment/"+boardSeq,
                 success: function(result){
-                    alert("댓글이 삭제 되었습니다.");
+                    alert("메모가 삭제 되었습니다.");
                     location.href="/daily-list/diary/"+boardSeq;
                 },
                 error: function(xhr, status, error) {
