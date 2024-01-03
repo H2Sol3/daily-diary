@@ -86,7 +86,7 @@ public class DiaryController {
         //세션값으로 변경 필요
         diaryDTO.setUserSeq(1);
 
-        //유효성 검사 수정 필요
+        //유효성 검사 수정  필요
         if (result.hasErrors()) {
             System.out.print(result);
 //            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.diaryDTO", result);
