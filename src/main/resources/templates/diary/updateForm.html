@@ -32,15 +32,15 @@
                 </td>
             </tr>
 
-<!--            <tr>-->
-<!--                <td><input type="text" value="${diaryDTO.date}"></td>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td><input type="text" value="${diaryDTO.date}"></td>-->
+            <!--            </tr>-->
         </table>
         <input type="submit" value="수정" th:onclick="'updateDiary(' + ${diaryDTO.boardSeq} + '); return false;'">
         <input type="button" value="목록" th:onclick="goDiaryList()">
-<!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
-<!--        var form = $('#form')[0];-->
-<!--        var formData = new FormData(form);-->
+        <!--        <input type="button" id="deleteBtn" th:onclick="|window.location.href='/diary/${diaryDTO.boardSeq}'|" value="삭제">-->
+        <!--        var form = $('#form')[0];-->
+        <!--        var formData = new FormData(form);-->
 
     </form>
 </div>
@@ -76,7 +76,13 @@
         var fileInput = $('input[name="file"]')[0]; // 파일 입력 요소 가져오기
         var file = fileInput.files[0]; // 선택된 파일 가져오기
 
-
+        if(title.length > 40){
+            alert("제목이 너무 길어요. 40자 이하로 적어주세요.");
+            return false;
+        }if(content.length > 1000){
+            alert("내용이 너무 길어요. 1000자 이하로 적어주세요.");
+            return false;
+        }
         if(title == null || title.trim() == ""){
             alert("제목을 입력하세요.");
             return false;

@@ -75,12 +75,16 @@
 <script>
 <!--  작성 버튼 클릭시 유효성 검사 필요  -->
     function textCheck(){
-        var title = $('input[name="title"]').val();
+        var title = $('#title').val();
         var content = $('#content').val();
 
-        console.log(title);
-        console.log(content);
-
+        if(title.length > 40){
+            alert("제목이 너무 길어요. 40자 이하로 적어주세요.");
+            return false;
+        }if(content.length > 1000){
+            alert("내용이 너무 길어요. 1000자 이하로 적어주세요.");
+            return false;
+        }
         if(title == null || title.trim() == ""){
             alert("제목을 입력하세요.");
             return false;
@@ -89,7 +93,7 @@
             alert("내용을 입력하세요.");
             return false;
         }
-
+        alert("등록 완료!");
         return true;
     }
 
