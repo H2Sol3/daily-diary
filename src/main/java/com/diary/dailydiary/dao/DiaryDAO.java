@@ -23,4 +23,6 @@ public interface DiaryDAO {
     void updateDiary(DiaryDTO diaryDTO);
 
     ArrayList<DiaryDTO> getDiaryListByText(String text);
+
+    int getAllDiaryCnt();
 }
