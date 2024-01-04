@@ -2,6 +2,7 @@ package com.diary.dailydiary.service;
 
 
 import com.diary.dailydiary.dto.DiaryDTO;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface DiaryService {
     void deleteDiary(int boardSeq);
 
     void updateDiary(DiaryDTO diaryDTO);
+
+    ArrayList<DiaryDTO> getDiaryListByText(String text);
 }

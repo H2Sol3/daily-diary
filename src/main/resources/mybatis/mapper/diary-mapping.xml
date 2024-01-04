@@ -40,7 +40,12 @@
 		date=now()
 		where board_seq=#{boardSeq}
 	</update>
-
+<!--일기 검색-->
+	<select id="getDiaryListByText" parameterType="String" resultType="diarydto">
+		SELECT * FROM board
+		WHERE title LIKE concat('%',#{text},'%') OR content LIKE concat('%',#{text},'%')
+		ORDER BY date desc
+	</select>
 <!--
 	&lt;!&ndash; 코멘트 등록 &ndash;&gt;
 	&lt;!&ndash; <select id="insertComment" parameterType="commentdto"> insert into

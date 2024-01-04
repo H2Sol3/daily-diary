@@ -13,4 +13,6 @@ public interface CommentDAO {
     void insertComment(CommentDTO commentDTO);
 
     void deleteComment(int boardSeq);
+
+    void updateComment(CommentDTO commentDTO);
 }

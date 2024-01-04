@@ -17,6 +17,15 @@
 	<delete id="deleteComment" parameterType="int">
 		delete from comment where board_seq=#{boardSeq}
 	</delete>
+
+	<update id="updateComment" parameterType="commentdto">
+		update comment
+		set content=#{content},
+		user_seq=#{userSeq},
+		secret=#{secret},
+		date=now()
+		where board_seq=#{boardSeq}
+	</update>
 <!--
 	&lt;!&ndash; 코멘트 등록 &ndash;&gt;
 	&lt;!&ndash; <select id="insertComment" parameterType="commentdto"> insert into
