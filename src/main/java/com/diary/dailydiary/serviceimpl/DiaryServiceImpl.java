@@ -54,5 +54,10 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryDAO.getDiaryListByText(text);
     }
 
+    @Override
+    public int getAllDiaryCnt() {
+        return diaryDAO.getAllDiaryCnt();
+    }
+
 
 }

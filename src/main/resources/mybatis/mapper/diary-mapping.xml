@@ -9,6 +9,12 @@
 		select count(*) from board
 		where user_seq = #{userSeq}
 	</select>
+
+	<!--	일기 총 갯수 가져오기-->
+	<select id="getAllDiaryCnt" resultType="int">
+		select count(*) from board
+	</select>
+
 <!-- 작성한 일기 목록 가져오기 -->
 	<select id="getBoardList" parameterType="hashmap" resultType="diarydto">
 		select * from board
@@ -16,6 +22,7 @@
 		ORDER BY board_seq DESC
 		limit #{limit},10
 	</select>
+
 <!-- 일기 작성하기-->
 	<insert id="insertBoard" parameterType="diarydto">
 		insert into board(user_seq, title, content, secret, file_name, file_path, date)

@@ -20,4 +20,6 @@ public interface DiaryService {
     void updateDiary(DiaryDTO diaryDTO);
 
     ArrayList<DiaryDTO> getDiaryListByText(String text);
+
+    int getAllDiaryCnt();
 }

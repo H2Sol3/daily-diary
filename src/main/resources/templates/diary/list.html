@@ -32,14 +32,32 @@
     <!--    검색 화면 보여주는 공간-->
     <div id="searchResults">
 
-
     </div>
+
+    <!--페이징-->
+    <div id="paging"
+         th:with="totalCnt=${diaryCnt}, totalPage=${(totalCnt % 10 == 0) ? (totalCnt / 10) : (totalCnt / 10 + 1)}, pageCnt=10, pageNum=1">
+        <th:block>
+            <a th:if="${page != 1}" th:href="@{/daily-list/(page-1)}" class="prev_link">이전</a>
+            <a th:unless="${page != 1}" href="#" class="prev_link">이전</a>
+
+            <th:block th:each="currentPageNum: ${#numbers.sequence(1, totalPage)}">
+                <a th:href="@{/daily-list/{pageNum}(pageNum=${currentPageNum})}" class="page_link"
+                   th:text="${currentPageNum}"></a>
+            </th:block>
+
+            <a th:if="${page != totalPage}" th:href="@{/daily-list/(page+1)}" class="next_link">다음</a>
+            <a th:unless="${page != totalPage}" href="#" class="next_link">다음</a>
+        </th:block>
+    </div>
+
 
 </div>
 </body>
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
     //다이어리 검색 제목+내용
     function searchDiary(){
         var searchText = $("#searchText").val();
