@@ -10,4 +10,6 @@ public interface UserDAO {
     UserDTO isEmailAlreadyRegistered(String email);
 
     void registerUser(UserDTO dto);
+
+    UserDTO getUserInfo(String email);
 }

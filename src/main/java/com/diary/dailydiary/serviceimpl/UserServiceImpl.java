@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserDTO dto) {
         userDAO.registerUser(dto);
     }
+
+    @Override
+    public UserDTO getUserInfo(String email) {
+        return userDAO.getUserInfo(email);
+    }
 }

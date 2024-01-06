@@ -15,7 +15,11 @@
 		insert into user(email, nick_name, password)
 		values (#{email},#{nickName},#{password})
 	</insert>
-
+<!--입력한 이메일로 디비 불러오기-->
+	<select id="getUserInfo" parameterType="String" resultType="userdto">
+		select * from user
+		where email = #{email}
+	</select>
 <!--
 	&lt;!&ndash; 코멘트 등록 &ndash;&gt;
 	&lt;!&ndash; <select id="insertComment" parameterType="commentdto"> insert into
