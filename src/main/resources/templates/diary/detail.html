@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>메인dailydiary 메인화면</title>
+
+    <style>
+        body {
+            background-color: #faf3f0;
+            display: flex;
+            flex-direction: column; /* 수직 정렬을 위해 column으로 설정 */
+            margin: 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
 </head>
 <body>
+<div th:include="layout/header :: header"></div>
 <div>
-    <h3>오늘 하루를 기록해보세요.</h3>
-    <h1>한솔이의 일기장</h1>
-</div>
-<div class="register-container">
     <table>
         <tr>
             <td th:text="${diaryDTO.title}"></td>

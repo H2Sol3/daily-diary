@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko " xmlns:th="http://www.thymeleaf.org">
+<html lang="ko " xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
 <head>
     <meta charset="UTF-8">
     <title>메인dailydiary 메인화면</title>
 </head>
 <body>
+
 <div>
     <h3>오늘 하루를 기록해보세요.</h3>
     <h1> 한솔이의 일기장 </h1>
 </div>
 
-<div class="login-container">
+<div layout:fragment="content">
     <h2>로그인</h2>
     <form onsubmit="event.preventDefault();">
         <div class="form-group">

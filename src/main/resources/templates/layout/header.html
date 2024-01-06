@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<!-- Thymeleaf 선언 / headerFragment 임을 선언-->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="header">
+<div style="border: solid 1px black">
+    <div>
+        <h3>오늘 하루를 기록해보세요.</h3>
+        <h1>한솔이의 일기장</h1>
+        <h4><a th:href="@{/logout}">로그아웃</a></h4>
+    </div>
+</div>
+</html>
