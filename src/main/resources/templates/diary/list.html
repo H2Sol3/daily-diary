@@ -2,20 +2,29 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>메인dailydiary 메인화면</title>
+    <title>daily-diary</title>
+
+    <style>
+        body {
+            background-color: #faf3f0;
+            display: flex;
+            margin: 0;
+            max-width: 800px; /* 최대 넓이 지정 */
+            margin-left: auto; /* 왼쪽 여백을 자동으로 조절 */
+            margin-right: auto; /* 오른쪽 여백을 자동으로 조절 */
+        }
+    </style>
 </head>
 <body>
-<div>
-    <h3>오늘 하루를 기록해보세요.</h3>
-    <h1>한솔이의 일기장</h1>
-    <h4><a th:href="@{/logout}">로그아웃</a></h4>
-</div>
-<div class="register-container">
-    <h2>일기장 목록</h2>
-    <input type="text" placeholder="검색어를 입력하세요." id="searchText">
-    <input type="button" value="검색" th:onclick="searchDiary()"><br>
 
-    <button type="button" onclick="window.location.href='/daily-list/diaryForm'">글작성</button>
+<div>
+    <div>
+        <h2>일기장 목록</h2>
+        <input type="text" placeholder="검색어를 입력하세요." id="searchText">
+        <input type="button" value="검색" th:onclick="searchDiary()"><br>
+
+        <button type="button" onclick="window.location.href='/daily-list/diaryForm'">글작성</button>
+    </div>
     <!-- 일기장 리스트 -->
     <div id="diaryList">
         <div th:each="list, status : ${boardList}">
@@ -51,8 +60,6 @@
             <a th:unless="${page != totalPage}" href="#" class="next_link">다음</a>
         </th:block>
     </div>
-
-
 </div>
 </body>
 </html>
