@@ -3,46 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>daily-diary</title>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             background-color: #faf3f0;
-            display: flex;
-            margin: 0;
-            max-width: 800px; /* 최대 넓이 지정 */
-            margin-left: auto; /* 왼쪽 여백을 자동으로 조절 */
-            margin-right: auto; /* 오른쪽 여백을 자동으로 조절 */
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #faf3f0;
+            margin: 10% auto;
+            padding: 20px;
+            width: 60%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 1200px;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .diary-entry {
+            margin-bottom: 20px;
+            border: 1px solid pink;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .listDiv {
+            border: 1px solid pink;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
-
 <div>
     <div>
         <h2>일기장 목록</h2>
-        <input type="text" placeholder="검색어를 입력하세요." id="searchText">
-        <input type="button" value="검색" th:onclick="searchDiary()"><br>
-
+        <input type="text" placeholder="검색어를 입력하세요." id="searchText" class="search-input">
+        <input type="button" value="검색" th:onclick="searchDiary()" class="search-input">
+        <br>
         <button type="button" onclick="window.location.href='/daily-list/diaryForm'">글작성</button>
     </div>
     <!-- 일기장 리스트 -->
     <div id="diaryList">
-        <div th:each="list, status : ${boardList}">
+        <div th:each="list, status : ${boardList}" class="diary-entry">
             <hr>
-            <a th:href="@{/daily-list/diary/{boardSeq}(boardSeq=${list.boardSeq})}">
-                <img th:if="${list.fileName ne null}" th:src="@{'/uploads/' + ${list.fileName}}" width="300"
-                     alt="게시글 이미지">
-                <h3 th:text="${list.title}"></h3>
-            </a>
+            <div class="listDiv">
+                <a th:href="'javascript:void(0);'" th:onclick="'detailModal(' + ${list.boardSeq} + ');'" data-toggle="modal"
+                   data-target="#detailModal">
+                    <img th:if="${list.fileName ne null}" th:src="@{'/uploads/' + ${list.fileName}}" alt="게시글 이미지">
+                    <h3 th:text="${list.title}"></h3>
+                </a>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <!-- detail.html에서 가져온 내용이 여기에 로드됩니다. -->
+                    </div>
+                </div>
+            </div>
 
-            <h5 th:text="${list.content}"></h5>
-            <h5 th:text="${list.date}"></h5>
+            <div class="listDiv">
+                <h5 th:text="${list.content}"></h5>
+                <h5 th:text="${list.date}"></h5>
+            </div>
         </div>
     </div>
     <!--    검색 화면 보여주는 공간-->
-    <div id="searchResults">
-
-    </div>
+    <div id="searchResults"></div>
 
     <!--페이징-->
     <div id="paging"
@@ -63,8 +121,149 @@
 </div>
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>daily-diary</title>-->
+<!--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>-->
+
+
+<!--    <style>-->
+<!--        body {-->
+<!--            background-color: #faf3f0;-->
+<!--           /* margin: 0;*/-->
+<!--            max-width: 800px;-->
+<!--            margin-left: auto;-->
+<!--            margin-right: auto;-->
+<!--        }-->
+
+<!--        .modal {-->
+<!--            display: none;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background-color: rgba(0, 0, 0, 0.5);-->
+<!--        }-->
+
+<!--        .modal-content {-->
+<!--            background-color: #faf3f0;-->
+<!--            margin: 10% auto;-->
+<!--            padding: 20px;-->
+<!--            width: 60%;-->
+<!--            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+<!--            max-height: 1200px;-->
+<!--            overflow-y: auto;-->
+<!--        }-->
+
+<!--        .close {-->
+<!--            color: #aaa;-->
+<!--            float: right;-->
+<!--            font-size: 28px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+
+<!--        .close:hover,-->
+<!--        .close:focus {-->
+<!--            color: black;-->
+<!--            text-decoration: none;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .diary-entry {-->
+<!--            margin-bottom: 20px;-->
+<!--            display: float;-->
+<!--            border-line: 1px solid pink;-->
+<!--            border-radius : 30px-->
+<!--        }-->
+
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div>-->
+<!--    <div>-->
+<!--        <h2>일기장 목록</h2>-->
+<!--        <input type="text" placeholder="검색어를 입력하세요." id="searchText">-->
+<!--        <input type="button" value="검색" th:onclick="searchDiary()"><br>-->
+
+<!--        <button type="button" onclick="window.location.href='/daily-list/diaryForm'">글작성</button>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 일기장 리스트 &ndash;&gt;-->
+<!--    <div id="diaryList">-->
+<!--        <div th:each="list, status : ${boardList}" class="diary-entry">-->
+<!--            <hr>-->
+<!--            &lt;!&ndash;            <a th:href="@{/daily-list/diary/{boardSeq}(boardSeq=${list.boardSeq})}">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <img th:if="${list.fileName ne null}" th:src="@{'/uploads/' + ${list.fileName}}" width="300"&ndash;&gt;-->
+<!--            &lt;!&ndash;                     alt="게시글 이미지">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h3 th:text="${list.title}"></h3>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </a>&ndash;&gt;-->
+
+<!--            <div class="listDiv">-->
+<!--            <a th:href="'javascript:void(0);'" th:onclick="'detailModal(' + ${list.boardSeq} + ');'" data-toggle="modal"-->
+<!--               data-target="#detailModal">-->
+<!--                <img th:if="${list.fileName ne null}" th:src="@{'/uploads/' + ${list.fileName}}" width="300"-->
+<!--                     alt="게시글 이미지">-->
+<!--                <h3 th:text="${list.title}"></h3>-->
+<!--            </a>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Modal &ndash;&gt;-->
+<!--            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"-->
+<!--                 aria-hidden="true">-->
+<!--                <div class="modal-dialog" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                        &lt;!&ndash; detail.html에서 가져온 내용이 여기에 로드됩니다. &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="listDiv">-->
+<!--                <h5 th:text="${list.content}"></h5>-->
+<!--                <h5 th:text="${list.date}"></h5>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    검색 화면 보여주는 공간&ndash;&gt;-->
+<!--    <div id="searchResults">-->
+
+<!--    </div>-->
+
+<!--    &lt;!&ndash;페이징&ndash;&gt;-->
+<!--    <div id="paging"-->
+<!--         th:with="totalCnt=${diaryCnt}, totalPage=${(totalCnt % 10 == 0) ? (totalCnt / 10) : (totalCnt / 10 + 1)}, pageCnt=10, pageNum=1">-->
+<!--        <th:block>-->
+<!--            <a th:if="${page != 1}" th:href="@{/daily-list/(page-1)}" class="prev_link">이전</a>-->
+<!--            <a th:unless="${page != 1}" href="#" class="prev_link">이전</a>-->
+
+<!--            <th:block th:each="currentPageNum: ${#numbers.sequence(1, totalPage)}">-->
+<!--                <a th:href="@{/daily-list/{pageNum}(pageNum=${currentPageNum})}" class="page_link"-->
+<!--                   th:text="${currentPageNum}"></a>-->
+<!--            </th:block>-->
+
+<!--            <a th:if="${page != totalPage}" th:href="@{/daily-list/(page+1)}" class="next_link">다음</a>-->
+<!--            <a th:unless="${page != totalPage}" href="#" class="next_link">다음</a>-->
+<!--        </th:block>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <script>
+    // 모달 테스트
+    function detailModal(boardSeq) {
+        $('#detailModal .modal-content').load("/daily-list/diary/" + boardSeq);
+        $('#detailModal').modal('show');
+    }
+
+
+
+
+
 
     //다이어리 검색 제목+내용
     function searchDiary(){
