@@ -18,6 +18,24 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        #closeBtn{
+            float: right;
+        }
+
+        #closeDiv, #updateDiv,#updateCommDiv{
+            margin-top : 30px;
+            margin-bottom : 20px;
+        }
+
+        #commentContent1{
+            margin-right : 100px;
+        }
+
+        #updateDiv{
+            float: right;
+        }
+
     </style>
 
 </head>
@@ -28,12 +46,15 @@
         <table>
             <tr>
                 <td><h3 th:text="${diaryDTO.title}"></h3></td>
+            </tr>
+            <tr>
                 <td th:text="${diaryDTO.date}" id="date" name="date"></td>
             </tr>
+
             <tr>
                 <td>
                     <!-- diaryDTO에 저장된 이미지 파일 경로 -->
-                    <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="300"
+                    <img th:if="${diaryDTO.fileName ne null}" th:src="@{'/uploads/' + ${diaryDTO.fileName}}" width="270" height="270"
                          alt="게시글 이미지">
                 </td>
                 <td th:text="${diaryDTO.content}"></td>
@@ -66,15 +87,15 @@
             <input type="hidden" name="secret" value=0>
             <tr th:if="${commentDTO != null}" style="display: show;" id="updateCommFormTr">
                 <td>
-                    <div>
+                    <div >
                         <span th:text="${commentDTO.content}" id="commentContent1"></span>
                     </div>
                 </td>
                 <td>
-                    <span th:text="${commentDTO.date}"></span>
+                    <span th:text="${commentDTO.date}"></span>&nbsp;&nbsp;
                 </td>
                 <td>
-                    <div>
+                    <div id="updateDiv">
                         <input type="button" value="수정" th:onclick="'updateCommentForm(' + ${diaryDTO.boardSeq} + ')'"
                                id="updateFormBtn">
                         <input type="button" value="삭제" th:onclick="'deleteComment(' + ${diaryDTO.boardSeq} + ')'">
@@ -102,8 +123,8 @@
         </table>
         <!--        }-->
 
-        <div>
-            <input type="button" value="닫기" th:onclick="cancelDetail()">
+        <div id="closeDiv">
+            <input type="button" value="닫기" th:onclick="cancelDetail()" id = "closeBtn">
         </div>
 
     </div>

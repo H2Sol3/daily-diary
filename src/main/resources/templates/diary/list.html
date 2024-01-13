@@ -21,6 +21,8 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
+
+            overflow-y: auto;
         }
 
         .modal-content {
@@ -30,7 +32,6 @@
             width: 60%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-height: 1200px;
-            overflow-y: auto;
         }
 
         .close {
@@ -49,8 +50,6 @@
 
         .diary-entry {
             margin-bottom: 20px;
-            border: 1px solid pink;
-            border-radius: 15px;
             overflow: hidden;
         }
 
@@ -59,6 +58,10 @@
             border-radius: 15px;
             overflow: hidden;
             margin-bottom: 20px;
+        }
+
+        img {
+            height : 300px;
         }
 
     </style>
@@ -75,13 +78,13 @@
     <!-- 일기장 리스트 -->
     <div id="diaryList">
         <div th:each="list, status : ${boardList}" class="diary-entry">
-            <hr>
             <div class="listDiv">
                 <a th:href="'javascript:void(0);'" th:onclick="'detailModal(' + ${list.boardSeq} + ');'" data-toggle="modal"
                    data-target="#detailModal">
                     <img th:if="${list.fileName ne null}" th:src="@{'/uploads/' + ${list.fileName}}" alt="게시글 이미지">
                     <h3 th:text="${list.title}"></h3>
                 </a>
+                <h5 th:text="${list.date}"></h5>
             </div>
             <!-- Modal -->
             <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"
@@ -93,10 +96,9 @@
                 </div>
             </div>
 
-            <div class="listDiv">
-                <h5 th:text="${list.content}"></h5>
-                <h5 th:text="${list.date}"></h5>
-            </div>
+<!--            <div class="listDiv">-->
+
+<!--            </div>-->
         </div>
     </div>
     <!--    검색 화면 보여주는 공간-->
